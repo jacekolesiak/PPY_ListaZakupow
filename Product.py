@@ -1,3 +1,3 @@
 print("z laptopa")
-print("edited from laptop")
+print("edited from laptopik")
 print(123)
