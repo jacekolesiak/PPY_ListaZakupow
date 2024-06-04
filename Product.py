@@ -22,6 +22,14 @@ class Product:
         if notes is not None:
             self.notes = notes
 
+    # def to_dict(self):
+    #     return self.__dict__
+    #
+    # @classmethod
+    # def from_dict(cls, data):
+    #     return cls(**data)
+
+
 # Example usage
 if __name__ == "__main__":
     p = Product(name="Milk", quantity=2, category="Dairy", price=3.5, notes="Organic")

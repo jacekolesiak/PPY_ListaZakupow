@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from Product import Product
 
@@ -9,10 +10,23 @@ class ProductNotFoundError(Exception):
 class InvalidQuantityError(Exception):
     pass
 
+class FileHandler:
+    @staticmethod
+    def write_to_file(filename, data):
+        with open(filename, 'w') as f:
+            json.dump(data, f)
+
+    @staticmethod
+    def read_from_file(filename):
+        with open(filename, 'r') as f:
+            return json.load(f)
+
+
 class ShoppingList:
+    history = []
+
     def __init__(self):
         self.products = []
-        self.history = []
 
     def add_product(self, product):
         self.products.append(product)
@@ -69,6 +83,15 @@ class ShoppingList:
         }
         return stats
 
+    def write_to_file(self, filename):
+        data = [product.__dict__ for product in self.products]
+        FileHandler.write_to_file(filename, data)
+
+    def read_from_file(self, filename):
+        data = FileHandler.read_from_file(filename)
+        self.products = [Product(**item) for item in data]
+
+
 # Example usage
 if __name__ == "__main__":
     shopping_list = ShoppingList()
@@ -87,3 +110,4 @@ if __name__ == "__main__":
 
     stats = shopping_list.generate_statistics()
     print(f"Total spent: {stats['total_spent']}, Average spent: {stats['average_spent']}, Most frequent product: {stats['most_frequent_product']}")
+
